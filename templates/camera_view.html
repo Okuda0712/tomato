@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>デモ用カメラ</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+</head>
+<body class="side-panel-page">
+    <div class="screen">
+        
+        <nav class="side-panel">
+
+            <div class="system-title">
+                <a href="{{ url_for('ui_bp.home_index') }}" style="text-decoration: none; color: inherit;">
+                    <p>
+                        <span class="text-wrapper">農園管理<br />システム</span>
+                        <span class="span">Ver 0.0</span>
+                    </p>
+                </a>
+            </div>
+                      
+            <ul class="nav-menu">
+                <li class="button-create" onclick="location.href='{{ url_for('ui_bp.kihyo_index') }}'">
+                    <i class="icon fas fa-pen-nib"></i>
+                    <div class="text-wrapper-button">起票作成</div>
+                </li>
+                <li class="button-list" onclick="location.href='{{ url_for('ui_bp.kannri_index') }}'">
+                    <i class="icon fas fa-book"></i>
+                    <div class="text-wrapper-button">起票一覧</div>
+                </li>
+                <li class="button-dashboard" onclick="location.href='{{ url_for('ui_bp.dashboard_index') }}'">
+                    <i class="icon fas fa-chart-bar"></i>
+                    <div class="text-wrapper-buttond">ダッシュボード</div>
+                </li>
+                <li class="button-alert" onclick="location.href='{{ url_for('ui_bp.keiti_index') }}'">
+                    <i class="icon fa fa-bell"></i>
+                    <div class="text-wrapper-button">異常検知</div>
+                </li>
+                    <li class="button-camera active" onclick="location.href='{{ url_for('ui_bp.camera_page') }}'">
+                    <i class="icon fas fa-video"></i>
+                    <div class="text-wrapper-button">デモ用カメラ</div>
+                </li>
+
+            </ul>
+
+            <form id="logout-form" method="POST" action="{{ url_for('auth_bp.logout') }}" style="width: 100%; margin-top: auto; padding-bottom: 20px;">
+                <button type="submit" class="button-logout" style="width: 100%; height: 50px; background-color: #f1f1f1; border: 1px solid #ccc; border-radius: 10px; font-size: 24px; font-weight: 700; cursor: pointer; transition: background-color 0.2s;">
+                    <i class="icon fas fa-sign-out-alt"></i> ログアウト
+                </button>
+            </form>
+
+        </nav>
+        
+        <div class="line-wrapper"></div>
+
+        <main class="main-content">
+            <h1 class="page-title">📸 Webカメラ撮影デモ</h1>
+            
+            <div class="camera-controls-container" style="width: 640px; margin: 20px auto; text-align: left; padding: 15px; border: 1px solid #ccc; border-radius: 8px;">
+                
+                <div style="margin-bottom: 15px;">
+                    <label for="camera-select" style="font-weight: bold; display: block; margin-bottom: 5px;">📷 撮影カメラ選択:</label>
+                    <select id="camera-select" style="width: 100%; padding: 10px; border-radius: 5px; border: 1px solid #ddd;"></select>
+                </div>
+
+                <div style="margin-bottom: 15px;">
+                    <input type="checkbox" id="fixed-camera-setting" style="margin-right: 10px;">
+                    <label for="fixed-camera-setting" style="font-weight: bold;">✅ このカメラを**定期監視カメラ**として設定する</label>
+                    <p style="font-size: 0.9em; color: #666; margin-top: 5px;">※チェックすると、バックエンドのタイマーサービスがこのカメラを使用します。</p>
+                </div>
+
+                <button type="button" id="start-camera-button" class="button-common" onclick="startCamera()" style="background-color: #007bff; color: white; width: 100%; margin-top: 10px;">
+                    <span class="button-text">選択したカメラを起動 / 設定保存</span>
+                </button>
+
+                <p id="status-message" style="margin-top: 10px; color: green; font-weight: bold; text-align: center; display: none;">設定を保存しました。</p>
+
+            </div>
+            
+            <div class="camera-container" style="width: 640px; margin: 20px auto; text-align: center;">
+                <h2 style="font-size: 1.2em; margin-bottom: 10px;">ライブプレビュー / 手動撮影</h2>
+                <video id="camera-stream" autoplay style="width: 100%; height: auto; border: 1px solid #000; display: block; background: #eee; margin-bottom: 10px;"></video>
+                
+                <button type="button" id="capture-button" class="button-common" onclick="capturePhoto()" style="background-color: #28a745; color: white;">
+                    <span class="button-text"><i class="fas fa-camera"></i> **手動で撮影**</span>
+                </button>
+                
+                <canvas id="camera-canvas" style="display: none;"></canvas>
+            </div>
+            
+            <div class="camera-status-info" style="margin-top: 20px; font-size: 18px;">
+                <p>※手動で撮影した画像は、すぐに `img/` フォルダに保存され、AI推論が開始されます。</p>
+                <p id="capture-feedback" style="font-weight: bold; color: #dc3545; display: none;">撮影完了。推論を開始しました。</p>
+            </div>
+            
+        </main>
+    </div>
+
+    <script defer src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>

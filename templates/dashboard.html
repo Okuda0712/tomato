@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>農園管理システム - ダッシュボード</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+    
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+    
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+</head>
+<body class="side-panel-page">
+    <div class="screen">
+        
+        <nav class="side-panel">
+
+            <div class="system-title">
+                <a href="{{ url_for('ui_bp.home_index') }}" style="text-decoration: none; color: inherit;">
+                    <p>
+                        <span class="text-wrapper">農園管理<br />システム</span>
+                        <span class="span">Ver 0.0</span>
+                    </p>
+                </a>
+            </div>
+                      
+            <ul class="nav-menu">
+                <li class="button-create" onclick="location.href='{{ url_for('ui_bp.kihyo_index') }}'">
+                    <i class="icon fas fa-pen-nib"></i>
+                    <div class="text-wrapper-button">起票作成</div>
+                </li>
+                <li class="button-list" onclick="location.href='{{ url_for('ui_bp.kannri_index') }}'">
+                    <i class="icon fas fa-book"></i>
+                    <div class="text-wrapper-button">起票一覧</div>
+                </li>
+                <li class="button-dashboard active" onclick="location.href='{{ url_for('ui_bp.dashboard_index') }}'">
+                    <i class="icon fas fa-chart-bar"></i>
+                    <div class="text-wrapper-buttond">ダッシュボード</div>
+                </li>
+                <li class="button-alert" onclick="location.href='{{ url_for('ui_bp.keiti_index') }}'">
+                    <i class="icon fa fa-bell"></i>
+                    <div class="text-wrapper-button">異常検知</div>
+                </li>
+                    <li class="button-camera" onclick="location.href='{{ url_for('ui_bp.camera_page') }}'">
+                    <i class="icon fas fa-video"></i>
+                    <div class="text-wrapper-button">デモ用カメラ</div>
+                </li>
+
+            </ul>
+
+            <form id="logout-form" method="POST" action="{{ url_for('auth_bp.logout') }}" style="width: 100%; margin-top: auto; padding-bottom: 20px;">
+                <button type="submit" class="button-logout" style="width: 100%; height: 50px; background-color: #f1f1f1; border: 1px solid #ccc; border-radius: 10px; font-size: 24px; font-weight: 700; cursor: pointer; transition: background-color 0.2s;">
+                    <i class="icon fas fa-sign-out-alt"></i> ログアウト
+                </button>
+            </form>
+
+        </nav>
+
+        <div class="line-wrapper"></div>
+
+        <main class="main-content">
+            <h1 class="page-title">ダッシュボード：異常検知サマリー</h1>
+            
+            <div class="dashboard-grid" style="display: grid; grid-template-columns: 2fr 1fr; gap: 30px; width: 100%; max-width: 1200px; margin-top: 20px;">
+                
+                <section class="chart-area detail-card" style="border: 1px solid #ddd; padding: 20px; border-radius: 10px;">
+                    <h2>過去30日間の病害虫検知件数</h2>
+                    <canvas id="timeline-chart" style="max-height: 400px;"></canvas>
+                    <p class="note" style="margin-top: 10px; font-size: 14px;">※検出確度が高い病害虫のみを集計しています。</p>
+                </section>
+
+                <aside class="summary-area detail-card" style="border: 1px solid #ddd; padding: 20px; border-radius: 10px;">
+                    <h2>全体サマリー</h2>
+                    <div class="stats" style="margin-bottom: 20px;">
+                        <p><strong>総検知件数 (全期間):</strong> <span id="total-alerts">--</span> 件</p>
+                        <p><strong>フィルタリング後件数:</strong> <span id="filtered-alerts">--</span> 件</p>
+                    </div>
+
+                    <h3>異常検知 多発エリア (TOP 5)</h3>
+                    <ul id="location-ranking" style="list-style: none; padding: 0; font-size: 16px;">
+                        <li>読み込み中...</li>
+                    </ul>
+                </aside>
+            </div>
+            
+            <div class="footer-buttons" style="max-width: 1200px; padding-right: 0;">
+                <button type="button" class="button-back" onclick="location.href='{{ url_for('ui_bp.home_index') }}'">
+                    <span class="button-back-text">戻る</span>
+                </button>
+            </div>
+        </main>
+    </div>
+
+    <script defer src="{{ url_for('static', filename='script_dashboard.js') }}"></script>
+</body>
+</html>

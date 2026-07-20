@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>農園管理システム - アカウント作成</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+</head>
+<body>
+    <div class="screen">
+        <div class="header-view">
+            <div class="text-wrapper">農園管理システム</div>
+        </div>
+
+        <!--{% if error %}
+        <div class="error-alert">
+            <strong class="font-bold">登録エラー:</strong>
+            <span class="error-text">{{ error }}</span>
+        </div>
+        {% endif %}-->
+
+        <!-- アカウント登録処理を行う '/sakusei' ルートにデータをPOSTします -->
+        <form class="input-form" method="POST" action="{{ url_for('auth_bp.sakusei_post') }}"> 
+            
+            <div class="input-group">
+                <div class="label-box">ユーザー名：</div>
+                <input type="text" name="username" required 
+                    class="input-box" placeholder="氏名を入力してください">
+            </div>
+
+            <div class="input-group">
+                <div class="label-box">ログインID：</div>
+                <input type="text" name="login_id" required 
+                    class="input-box" placeholder="ログインIDを入力してください">
+            </div>
+
+            <div class="input-group">
+                <div class="label-box">パスワード：</div>
+                <input type="password" name="password" required 
+                    class="input-box" placeholder="パスワードを入力してください">
+            </div>
+
+            <div class="action-button">
+                
+                <a href="{{ url_for('auth_bp.index') }}" class="button-box button-back-sakusei">
+                    戻る
+                </a>
+
+                <button type="submit" class="button-box button-submit-sakusei">
+                    作成
+                </button>
+
+            </div>
+            
+        </form>
+    </div>
+</body>
+</html>

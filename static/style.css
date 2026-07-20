@@ -1,0 +1,631 @@
+/* =======================================================
+ * INTEGRATED STYLESHEET (styles.css)
+ * 統合後の全アプリケーション用スタイル
+ * ======================================================= */
+
+/* --- 0. CSS カスタムプロパティ (変数) --- */
+:root {
+    /* Font Families */
+    --font-family-inter: "Inter", Helvetica, Arial, sans-serif;
+    --title-font-family: "Inter-Black", Helvetica;
+    --message-font-family: "Inter-SemiBold", Helvetica;
+
+    /* Colors */
+    --color-title-green: #1abc9c;
+    --color-label-blue: #82aac2;
+    --color-input-gray: #d9d9d9;
+    --color-border-dark: #000;
+    --color-border-light: #0000003d;
+    --color-bg-light: #ededed;
+    
+    --color-primary-green: #a4e50d; /* 作成ボタンのハイライト */
+    --color-primary-shadow: #78a80a;
+    --color-alert-red: #ff3333;
+    --color-alert-red-border: #d32f2f;
+    --color-default-bg: #f3f3f3; /* フォーム入力背景 */
+    --color-white: #ffffff;
+    
+    /* Font Sizes */
+    --font-size-64: 64px;
+    --font-size-48: 48px;
+    --font-size-45: 45px;
+    --font-size-38: 38px;
+    --font-size-36: 36px;
+    --font-size-35: 35px;
+    --font-size-30: 30px;
+    --font-size-24: 24px;
+    --font-size-20: 20px;
+}
+
+/* --- 1. グローバル設定 & ベースリセット --- */
+* { 
+    box-sizing: border-box; 
+    margin: 0; 
+    padding: 0; 
+    font-family: var(--font-family-inter);
+}
+body { 
+    background-color: var(--color-white);
+    color: var(--color-border-dark);
+}
+
+/* 画面コンテナ (認証/完了画面の中央寄せ) */
+.screen {
+    width: 100%;
+    height: 100vh;
+    min-height: 982px;
+    display: flex;
+    flex-direction: column;
+    align-items: center; 
+    justify-content: center; 
+    position: relative;
+    overflow: auto;
+    background-color: var(--color-white);
+}
+
+/* --- 2. 認証/完了画面 & フォーム共通スタイル --- */
+
+/* タイトルブロック */
+.title-block-image, .screen .view, .header-view {
+    width: 728px;
+    height: 165px;
+    background-color: var(--color-bg-light);
+    border-radius: 10px;
+    border: 1px solid #8d8d8d;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.title-block-image { margin-top: 215px; } /* kannryou.html の配置基準 */
+.header-view { margin-bottom: 50px; margin-top: 0; }
+.screen .view { margin-bottom: 0; } 
+
+/* タイトルテキスト */
+.title-outline-image, .screen .text-wrapper {
+    font-family: var(--title-font-family);
+    font-weight: 900;
+    color: var(--color-title-green);
+    font-size: var(--font-size-64);
+    letter-spacing: 0;
+    line-height: normal;
+    text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.5); 
+}
+
+/* フォーム全体 */
+.input-form { 
+    width: 777px; 
+    max-width: 80vw;
+    display: flex; 
+    flex-direction: column; 
+    gap: 25px; 
+}
+.input-group { 
+    display: flex; 
+    align-items: center; 
+    height: 51px; 
+}
+
+/* ラベル (青みがかった背景) */
+.label-box {
+    width: 150px; /* 固定幅 */
+    height: 100%;
+    background-color: var(--color-label-blue); 
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    padding-left: 20px;
+    box-sizing: border-box;
+    font-weight: 900;
+    color: var(--color-border-dark);
+    font-size: var(--font-size-24); 
+    line-height: 1.2;
+    flex-shrink: 0;
+    text-align: left;
+}
+
+/* 入力フィールド */
+.input-box {
+    width: 100%; /* 残りの幅を占める */
+    height: 55px;
+    background-color: var(--color-input-gray); 
+    border-radius: 10px;
+    border: 1px solid var(--color-border-dark);
+    margin-left: 10px; /* ラベルとの間隔を調整 */
+    font-size: var(--font-size-20);
+    padding: 0 20px;
+    padding-left: 15px;
+    flex-grow: 1; /* ラベルの隣で伸びるように */
+}
+
+/* --- 戻る/作成ボタン (認証/フォーム画面) --- */
+.action-button {
+    width: 100%; 
+    display: flex; 
+    justify-content: space-between; /* 左右端に配置 */
+    margin-top: 50px; 
+}
+
+/* ボタン共通スタイル */
+.button-box {
+    width: 150px;
+    height: 60px;
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: var(--font-size-30);
+    font-weight: 700;
+    color: var(--color-border-dark);
+    cursor: pointer;
+    transition: background-color 0.2s;
+    border: 1px solid var(--color-border-light); 
+}
+.button-style-image { 
+    width: 141px; height: 36px; font-size: 16px; border-radius: 5px; /* index.htmlの小さいボタン */
+    border: 1px solid var(--color-border-light); 
+    background-color: var(--color-white);
+}
+
+/* 戻るボタンの配色 */
+.button-back-sakusei {
+    background-color: #d9d9d9;
+}
+
+/* 作成/提出ボタンの配色 */
+.button-submit-sakusei {
+    background-color: #fca0d6; 
+}
+
+
+/* --- 完了画面メッセージ --- */
+.div {
+    width: 600px; 
+    height: 150px;
+    margin-top: 121px;
+    font-family: var(--message-font-family);
+    font-weight: 600; /* var(--message-font-weight)は未定義のため固定 */
+    color: var(--color-border-dark);
+    font-size: var(--font-size-45);
+    line-height: 54.0px;
+    text-align: center; 
+}
+.div-wrapper {
+    width: 141px; height: 68px; margin-top: 82px; background-color: var(--color-white);
+    border: 1px solid var(--color-border-light); border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    margin-left: 300px;
+    padding-top: 215px;
+}
+.text-wrapper-2 {
+    font-size: var(--font-size-24); font-weight: 600; 
+}
+
+
+/* --- 3. ナビゲーション & メインコンテンツ (サイドバーを持つ画面) --- */
+
+/* サイドバーを持つ画面の全体調整 */
+.side-panel-page {
+    padding-left: 354px; 
+    min-height: 100vh;
+}
+
+/* サイドパネル */
+.side-panel {
+    width: 350px; height: 100vh; flex-shrink: 0; padding: 48px 27px 0; 
+    display: flex; flex-direction: column; align-items: center; position: fixed; 
+    top: 0; left: 0; z-index: 20; background-color: var(--color-white); 
+}
+.line-wrapper { 
+    width: 4px; height: 100vh; background-color: var(--color-border-dark); 
+    position: fixed; left: 350px; top: 0; z-index: 10; 
+}
+.main-content {
+    margin-left: 0; 
+    width: 100%;
+    flex-grow: 1; padding: 48px 50px 30px; 
+    overflow-x: auto; 
+    display: flex; flex-direction: column; align-items: center;
+}
+
+/* サイドバータイトル */
+.system-title .text-wrapper { font-size: 40px; }
+.system-title .span { font-size: 20px; }
+
+/* ナビゲーションメニュー */
+.nav-menu { list-style: none; padding: 0; margin: 0; width: 100%; display: flex; flex-direction: column; align-items: center; }
+.button-create, .button-list, .button-dashboard, .button-alert, .button-camera {
+    width: 300px; height: 60px; border-radius: 15px; margin-bottom: 20px; 
+    display: flex; align-items: center; justify-content: flex-start; 
+    cursor: pointer; border: 1px solid; padding: 0 25px; transition: background-color 0.2s;
+}
+
+/* ナビゲーションボタン配色 */
+.button-create { background-color: #fca0d6; border-color: #c0789d; }
+.button-list { background-color: #e5ff9c; border-color: #92b864; }
+.button-dashboard { background-color: #b592ff; border-color: #7957c7; }
+.button-alert { background-color: var(--color-alert-red); border-color: var(--color-alert-red-border); color: var(--color-white) !important; }
+.button-camera { background-color: #F15A22; border-color: #F12622; }
+.icon { font-size: 28px; margin-right: 20px; color: #000; flex-shrink: 0; }
+.text-wrapper-button { font-size: 30px; font-weight: 700; color: #000; flex-grow: 1; text-align: left; }
+.text-wrapper-buttond { font-size: 28px; font-weight: 700; color: #000; flex-grow: 1; text-align: left; }
+.button-alert .text-wrapper-button-alert { color: #fff !important; }
+.button-create.active, .button-list.active, .button-alert.active, .button-dashboard.active, .button-camera.active { border: 3px solid var(--color-border-dark); padding: 0 23px; } 
+
+/* --- 設定画面ナビゲーション --- */
+.menu-button { 
+    width: 100%; height: 90px; border-radius: 10px; display: flex; 
+    align-items: center; justify-content: flex-start; margin-bottom: 25px; 
+    padding-left: 30px; cursor: pointer; 
+}
+.menu-button .icon { margin-right: 20px; width: 48px; height: 48px; }
+.button-text { font-size: var(--font-size-38); font-weight: 500; white-space: nowrap; }
+.camera-check { background-color: #C3B3F8; }
+.record-create { background-color: #F8B3E4; }
+.record-list { background-color: #D3F2B0; }
+.other { background-color: #2ED7A5; color: #ffffff; justify-content: center; } /* その他 */
+
+/* --- テーブル (一覧系) --- */
+.page-title { font-size: var(--font-size-48); font-weight: 700; text-align: center; margin-bottom: 40px; }
+.ticket-list-container { width: 100%; max-width: 850px; margin: 0 auto; overflow-x: auto; }
+.ticket-table { width: 100%; border-collapse: collapse; }
+.ticket-table th, .ticket-table td { border: 1px solid var(--color-border-dark); text-align: center; font-size: var(--font-size-24); padding: 10px 5px; }
+
+/* 異常検知テーブルの列幅 */
+.ticket-table .col-id { width: 5%; }
+.ticket-table .col-type { width: 25%; }
+.ticket-table .col-timestamp { width: 20%; line-height: 1.2; font-size: var(--font-size-20); }
+.ticket-table .col-status { width: 15%; }
+.ticket-table .col-confidence { width: 15%; }
+
+/* --- フッターボタン (一覧/フォーム共通) --- */
+.footer-buttons { 
+    display: flex; 
+    justify-content: center; 
+    width: 100%; 
+    max-width: 800px; 
+    margin: 50px auto 30px; 
+    flex-shrink: 0; 
+    gap: 20px; 
+    padding-bottom: 30px;
+}
+.button-common { 
+    width: 200px; 
+    height: 80px; 
+    border-radius: 15px; 
+    border: none; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    cursor: pointer; 
+    box-shadow: 0 4px #b8b8b8; 
+    transition: all 0.1s ease; 
+}
+.button-common:active { 
+    box-shadow: none; 
+    transform: translateY(4px); 
+}
+.button-back { 
+    background-color: #d9d9d9; 
+    width: 180px; 
+    height: 60px;
+    border-radius: 15px;
+}
+.button-back-text { 
+    font-size: var(--font-size-30); 
+    font-weight: 700; 
+    color: var(--color-border-dark); 
+}
+.button-create-submit { 
+    background-color: var(--color-primary-green); 
+    box-shadow: 0 4px var(--color-primary-shadow); 
+}
+
+/* --- 設定画面固有のスタイル --- */
+.sidebar { grid-template-columns: 450px 1fr; } 
+.tabs { display: flex; margin-bottom: 30px; }
+.tab-item { 
+    font-size: var(--font-size-48); 
+    font-weight: bold; 
+    padding: 20px 40px; 
+    cursor: pointer; 
+    background-color: #F0F0F0; 
+    border-radius: 10px; 
+}
+.tab-active { 
+    background-color: #E6E6E6; 
+    border-radius: 10px 10px 0 0; 
+}
+.account-list { 
+    border-collapse: collapse; 
+    width: 100%; 
+    font-size: var(--font-size-48); 
+    border: 1px solid var(--color-border-dark); 
+}
+.account-name-cell { 
+    width: 70%; 
+    text-align: left; 
+    padding-left: 50px; 
+    font-weight: bold; 
+}
+.account-list .action-button { 
+    border: 1px solid var(--color-border-dark); 
+    background-color: var(--color-white); 
+    font-size: 32px; 
+    padding: 5px 15px; 
+    border-radius: 8px; 
+}
+
+/* --- フォームテーブル (作成/編集画面) --- */
+.form-container { 
+    border: 1px solid var(--color-border-dark); 
+    width: 100%; 
+    max-width: 800px; 
+    margin: 0 auto; 
+    table-layout: fixed; 
+    border-collapse: collapse; 
+    background-color: var(--color-white); 
+    font-size: var(--font-size-36); 
+}
+.form-container tr { border-bottom: 1px solid var(--color-border-dark); }
+.form-container tr:last-child { border-bottom: none; }
+.form-container th { 
+    width: 30%; 
+    padding: 15px 20px; 
+    text-align: left; 
+    font-weight: 400; 
+    border-right: 1px solid var(--color-border-dark); 
+    vertical-align: top; 
+    line-height: 1.5; 
+}
+.form-container td { width: 70%; padding: 15px 20px; }
+
+/* フォーム入力フィールド (汎用) */
+.input-field-common { 
+    width: 100%; 
+    height: 60px; 
+    padding: 0 15px; 
+    border: none; 
+    background-color: var(--color-default-bg); 
+    font-size: var(--font-size-30); 
+    border-radius: 8px; 
+    color: var(--color-border-dark); 
+    box-sizing: border-box; 
+}
+.input-field-common[disabled] { opacity: 0.7; }
+.input-textarea { 
+    height: 200px; 
+    padding: 15px; 
+    resize: none; 
+    line-height: 1.4; 
+}
+
+/* 日付・時刻フィールド (フォーム) */
+.datetime-fields { 
+    display: flex; 
+    align-items: center; 
+    gap: 5px; 
+    font-size: var(--font-size-30); 
+    white-space: nowrap; 
+}
+.datetime-fields input { 
+    height: 40px; 
+    padding: 0 5px; 
+    text-align: center; 
+    border: 1px solid #ccc; 
+    background-color: var(--color-default-bg); 
+    font-size: var(--font-size-30); 
+    border-radius: 4px; 
+    box-sizing: border-box; 
+}
+.datetime-fields .input-year { width: 80px; }
+.datetime-fields .input-month, .datetime-fields .input-day, .datetime-fields .input-hour, .datetime-fields .input-minute { width: 50px; }
+
+/* ドロップダウン (汎用) */
+.dropdown-wrapper { position: relative; width: 100%; }
+.dropdown-toggle { 
+    width: 100%; 
+    cursor: pointer; 
+    display: flex; 
+    align-items: center; 
+    justify-content: space-between; 
+    background-color: var(--color-default-bg); 
+    height: 60px; 
+    padding: 0 15px; 
+    border-radius: 8px; 
+    font-size: var(--font-size-30); 
+}
+.dropdown-arrow { 
+    font-size: var(--font-size-30); 
+    color: var(--color-border-dark); 
+    transition: transform 0.3s; 
+    position: absolute; 
+    right: 15px; 
+    top: 50%; 
+    transform: translateY(-50%); 
+    pointer-events: none;
+}
+.dropdown-menu { 
+    display: none;
+    position: absolute; 
+    top: 100%; 
+    left: 0; 
+    width: 100%; 
+    max-height: 300px; 
+    overflow-y: auto; 
+    background-color: var(--color-white); 
+    border: 1px solid var(--color-border-dark); 
+    margin-top: 5px; 
+    border-radius: 8px; 
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2); 
+    z-index: 100; 
+    animation: fadeIn 0.15s ease-out; /* アニメーション定義を移動 */
+}
+.dropdown-menu.show { display: block; }
+.dropdown-item { 
+    padding: 15px; 
+    font-size: var(--font-size-30); 
+    background-color: #d9d9d9; 
+    margin: 5px; 
+    border-radius: 5px; 
+    text-align: center; 
+    font-weight: 700; 
+    cursor: pointer; 
+}
+.dropdown-item:hover { background-color: #c4c4c4; }
+
+/* ファイルラッパー (添付資料) の見た目調整 */
+.file-wrapper { 
+    width: 100%; 
+    cursor: pointer; 
+    background-color: var(--color-default-bg); 
+    height: 60px; 
+    border-radius: 8px; 
+}
+.file-wrapper .file-placeholder { color: #888; }
+
+
+/* --- フィルターエリア --- */
+.filter-area { 
+    width: 100%; 
+    margin-bottom: 50px; 
+    max-width: 850px; 
+    margin-left: auto; 
+    margin-right: auto; 
+}
+.filter-row { 
+    display: flex; 
+    align-items: center; 
+    margin-bottom: 20px; 
+}
+.filter-label { 
+    width: 250px; 
+    font-size: var(--font-size-36); 
+    font-weight: 400; 
+    flex-shrink: 0;
+}
+.filter-input { 
+    flex-grow: 1; 
+    height: 60px; 
+    border: 1px solid var(--color-border-dark); 
+    background-color: var(--color-default-bg); 
+    display: flex; 
+    align-items: center; 
+    padding: 0 10px; 
+    position: relative; 
+    max-width: 500px; 
+}
+.dropdown-select { 
+    appearance: none; 
+    border: none; 
+    background: transparent; 
+    font-size: var(--font-size-30); 
+    color: var(--color-border-dark); 
+    flex-grow: 1; 
+    height: 100%; 
+    padding-right: 40px; 
+    outline: none; 
+    cursor: pointer;
+}
+
+/* 日付フィールド (フィルター) */
+.date-row .date-fields { 
+    flex-grow: 1; 
+    display: flex; 
+    align-items: center; 
+    font-size: var(--font-size-30); 
+    max-width: 500px; 
+    justify-content: space-between; 
+}
+.date-fields input { 
+    height: 60px; 
+    border: 1px solid var(--color-border-dark); 
+    background-color: var(--color-default-bg); 
+    font-size: var(--font-size-30); 
+    text-align: center; 
+    margin: 0 5px; 
+    padding: 0; 
+    outline: none; 
+}
+.date-fields .input-year { width: 100px; }
+.date-fields .input-month, .date-fields .input-day { width: 80px; }
+.date-fields span {
+    margin: 0 5px;
+    flex-shrink: 0;
+}
+
+/* --- アニメーション --- */
+@keyframes fadeIn { 
+    from { 
+        opacity:0; 
+        transform:translateY(-5px); 
+    } 
+    to { 
+        opacity:1; 
+        transform:translateY(0); 
+    } 
+}
+
+/* static/style.css (追加/修正) */
+
+/* --- カードグリッドのレイアウト --- */
+.alert-card-grid {
+    display: grid;
+    /* 画面幅に合わせてカードを均等に配置 */
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
+    gap: 30px; /* カード間の間隔 */
+    padding: 20px;
+    width: 100%;
+    max-width: 1200px; /* 必要に応じて最大幅を設定 */
+    margin: 0 auto;
+}
+
+/* --- 個別のカードのスタイル（枠線と影） --- */
+.alert-card {
+    border: 2px solid #ddd; /* 枠線 */
+    border-radius: 12px;
+    overflow: hidden; /* 画像が枠をはみ出さないように */
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* 影 */
+    transition: all 0.3s ease;
+    background-color: #fff;
+}
+
+.alert-card:hover {
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+    transform: translateY(-4px);
+    border-color: #007bff; /* ホバー時にメインカラーに変更 */
+}
+
+/* --- 画像のスタイル --- */
+.card-image-wrapper {
+    height: 200px; /* 画像の高さを固定 */
+    overflow: hidden;
+    background-color: #f8f8f8;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.alert-card-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* 画像をトリミングして枠に合わせる */
+}
+
+/* --- カードコンテンツ (情報表示部分) --- */
+.card-content {
+    padding: 15px;
+}
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.9em;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 5px;
+    margin-bottom: 10px;
+}
+.card-type {
+    font-size: 1.1em;
+    font-weight: bold;
+    margin-top: 0;
+}

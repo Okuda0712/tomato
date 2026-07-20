@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+ <head>
+ <meta name="viewport" content="width=device-width, initial-scale=1" />
+ <meta charset="utf-8" />
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+ </head>
+ <body>
+ <div class="screen">
+ <div class="view"><div class="text-wrapper">農園管理システム</div></div>
+<div class="div">アカウントを作成しました。<br>ログイン画面に戻りログインしてください。</div>
+
+<a href="{{ url_for('auth_bp.index') }}" class="div-wrapper">   <div class="text-wrapper-2">戻る</div>
+ </a>
+ </div>
+</body>
+</html>

@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>農園管理システム - 起票作成</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+    
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    
+    <script defer src="{{ url_for('static', filename='script.js') }}"></script>
+</head>
+<body class="side-panel-page">
+    <div class="screen">
+        
+        <nav class="side-panel">
+
+            <div class="system-title">
+                <a href="{{ url_for('ui_bp.home_index') }}" style="text-decoration: none; color: inherit;">
+                    <p>
+                        <span class="text-wrapper">農園管理<br />システム</span>
+                        <span class="span">Ver 0.0</span>
+                    </p>
+                </a>
+            </div>
+                      
+            <ul class="nav-menu">
+                <li class="button-create active" onclick="location.href='{{ url_for('ui_bp.kihyo_index') }}'">
+                    <i class="icon fas fa-pen-nib"></i>
+                    <div class="text-wrapper-button">起票作成</div>
+                </li>
+                <li class="button-list" onclick="location.href='{{ url_for('ui_bp.kannri_index') }}'">
+                    <i class="icon fas fa-book"></i>
+                    <div class="text-wrapper-button">起票一覧</div>
+                </li>
+                <li class="button-dashboard" onclick="location.href='{{ url_for('ui_bp.dashboard_index') }}'">
+                    <i class="icon fas fa-chart-bar"></i>
+                    <div class="text-wrapper-buttond">ダッシュボード</div>
+                </li>
+                <li class="button-alert" onclick="location.href='{{ url_for('ui_bp.keiti_index') }}'">
+                    <i class="icon fa fa-bell"></i>
+                    <div class="text-wrapper-button">異常検知</div>
+                </li>
+                    <li class="button-camera" onclick="location.href='{{ url_for('ui_bp.camera_page') }}'">
+                    <i class="icon fas fa-video"></i>
+                    <div class="text-wrapper-button">デモ用カメラ</div>
+                </li>
+
+            </ul>
+
+            <form id="logout-form" method="POST" action="{{ url_for('auth_bp.logout') }}" style="width: 100%; margin-top: auto; padding-bottom: 20px;">
+                <button type="submit" class="button-logout" style="width: 100%; height: 50px; background-color: #f1f1f1; border: 1px solid #ccc; border-radius: 10px; font-size: 24px; font-weight: 700; cursor: pointer; transition: background-color 0.2s;">
+                    <i class="icon fas fa-sign-out-alt"></i> ログアウト
+                </button>
+            </form>
+
+        </nav>
+
+        <div class="line-wrapper"></div>
+
+        <main class="main-content">
+            <h1 class="page-title">起票作成</h1>            
+            <form id="ticket-form" method="POST" action="{{ url_for('api.create_ticket_api') }}">
+                <table class="form-container">
+                    <tbody>
+                        <tr>
+                            <th>起票カテゴリ</th>
+                            <td>
+                                <input type="hidden" name="category" id="hidden-category-input" value="">
+                                
+                                <div class="dropdown-wrapper">
+                                    <div class="dropdown-toggle" id="category-toggle">
+                                        <span class="dropdown-value" id="selected-category" style="color: #888;">（選択してください）</span>
+                                        <span class="dropdown-arrow">▼</span>
+                                    </div>
+                                    <div class="dropdown-menu" id="category-menu"></div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>件名</th>
+                            <td><input type="text" class="input-field-common" name="title" placeholder="例: 害虫の大量発生について" required /></td>
+                        </tr>
+                        <tr>
+                            <th>日付</th>
+                            <td>
+                                <div class="datetime-fields">
+                                    <input type="text" class="input-year" name="year" placeholder="2025" maxlength="4" required /> 年
+                                    <input type="text" class="input-month" name="month" placeholder="01" maxlength="2" required /> 月
+                                    <input type="text" class="input-day" name="day" placeholder="01" maxlength="2" required /> 日
+                                    <span style="margin: 0 10px;">日時 :</span>
+                                    <input type="text" class="input-hour" name="hour" placeholder="00" maxlength="2" required /> :
+                                    <input type="text" class="input-minute" name="minute" placeholder="00" maxlength="2" required />
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>作成者</th>
+                            <td><input type="text" class="input-field-common" name="creator_name" placeholder="文教太郎" required /></td>
+                        </tr>
+                        <tr>
+                            <th>発生場所</th>
+                            <td><input type="text" class="input-field-common" name="location" placeholder="例: A棟1区画" /></td>
+                        </tr>
+                        <tr>
+                            <th>事象の内容</th>
+                            <td><textarea class="input-field-common input-textarea" name="details" placeholder="詳細な状況、影響、行った初期対応などを記述してください。" required></textarea></td>
+                        </tr>
+                        <tr>
+                            <th>添付資料</th>
+                            <td>
+                                <label for="file-upload" class="dropdown-toggle file-wrapper">
+                                    <span class="dropdown-value file-placeholder" id="file-display" style="color: #888;">ファイルが選択されていません</span>
+                                    <input type="file" id="file-upload" name="attachment" style="display: none;" />
+                                </label>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="footer-buttons">
+                    <a href="{{ url_for('ui_bp.home_index') }}" class="button-common button-back" style="text-decoration: none;">
+                     <span class="button-text">戻る</span>
+                    </a>
+                
+                    <button type="submit" class="button-common button-create-submit">
+                        <span class="button-text">起票を<br>作成</span>
+                    </button>
+                </div>
+            </form>
+        </main>
+    </div>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // 1. URLから alert_id が渡されているかチェック
+        const urlParams = new URLSearchParams(window.location.search);
+        const alertId = urlParams.get('alert_id'); 
+
+        if (alertId) {
+            // 2. Local Storageからアラートデータを取得
+            const alertDataJson = localStorage.getItem('alertToTicket');
+            
+            if (!alertDataJson) {
+                console.warn('Local Storageにアラートデータが見つかりません。');
+                return;
+            }
+
+            const alertData = JSON.parse(alertDataJson);
+            console.log('✅ Local Storage からデータを読み込みました:', alertData); // ★追加: 取得データの内容を表示★
+
+            // 3. 日付/時刻の分割 (timestamp: YYYY-MM-DD HH:MM:SS の形式を想定)
+            const dt = new Date(alertData.timestamp);
+            const year = dt.getFullYear();
+            const month = (dt.getMonth() + 1).toString().padStart(2, '0');
+            const day = dt.getDate().toString().padStart(2, '0');
+            const hour = dt.getHours().toString().padStart(2, '0');
+            const minute = dt.getMinutes().toString().padStart(2, '0');
+
+            // 4. フォームへのデータ割り当て
+            
+            // カテゴリ (Dropdown) - アラートタイプから取得
+            // 例: 'Tomato Early blight (disease)' -> 'Tomato Early blight'
+            const categoryValue = alertData.type.split(' (')[0].trim(); 
+            
+            const selectedCategorySpan = document.getElementById('selected-category');
+            const hiddenCategoryInput = document.getElementById('hidden-category-input');
+
+            if (hiddenCategoryInput) {
+                // Dropdownの表示値をセット
+                selectedCategorySpan.textContent = categoryValue;
+                selectedCategorySpan.style.color = '#333';
+                hiddenCategoryInput.value = categoryValue; // 隠しフィールドに値をセット
+            }
+            
+            // 日付と場所
+            document.querySelector('input[name="year"]').value = year;
+            document.querySelector('input[name="month"]').value = month;
+            document.querySelector('input[name="day"]').value = day;
+            document.querySelector('input[name="hour"]').value = hour;
+            document.querySelector('input[name="minute"]').value = minute;
+            
+            // 発生場所
+            document.querySelector('input[name="location"]').value = alertData.location || '自動検知エリア';
+            
+            // 事象の内容 (詳細データから作成)
+            document.querySelector('textarea[name="details"]').value = 
+                `[AI検知 ID: ${alertData.id} より起票]\n\n**検知タイプ:** ${alertData.type}\n**確度:** ${alertData.confidence}\n\n--- AIログ詳細は後述 ---\n\n` + (alertData.details || '詳細情報なし');
+
+            // 添付資料 (ファイル名のみ表示)
+            const fileDisplay = document.getElementById('file-display');
+            const attachmentPath = alertData.attachment_path ? alertData.attachment_path.split('/').pop() : '検知画像あり';
+            
+            if (fileDisplay) {
+                fileDisplay.textContent = attachmentPath;
+                fileDisplay.style.color = '#333';
+                // NOTE: ファイルインプット自体はセキュリティ上セットできないため、DBにパスを保存していることを信頼する
+            }
+
+            // フォームタイトルを更新
+            document.querySelector('.page-title').textContent = `起票作成 (異常検知 ID: ${alertId} から)`;
+        }
+    });
+    </script>
+</body>
+</html>

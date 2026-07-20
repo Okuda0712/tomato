@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>農園管理システム - アカウント一覧</title>
+    <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+    <div class="menu-button camera-check">
+                <img class="icon" src="img/camera-icon.svg" alt="カメラアイコン" />
+                <a href="{{ url_for('ui_bp.home_index') }}" class="button-text"> カメラ確認
+                </a>        
+            </div>
+
+            <div class="menu-button record-create">
+                <img class="icon" src="img/pen-icon.svg" alt="ペンアイコン" />
+                <a href="{{ url_for('ui_bp.kihyo_index') }}" class="button-text">
+                    記録作成
+                </a>
+            </div>
+            <div class="menu-button record-list">
+                <img class="icon" src="img/book-icon.svg" alt="本アイコン" />
+                <a href="{{ url_for('ui_bp.kannri_index') }}" class="button-text">
+                    記録一覧
+                </a>
+            </div>
+            <div class="menu-button other">
+                <a href="{{ url_for('ui_bp.settei_index') }}" class="button-text">
+                    その他
+                </a>
+            </div>
+        
+        <div class="main-content">
+            <div class="tabs">
+                <div class="tab-item tab-active">管理者アカウント一覧</div>
+                <div class="tab-item tab-inactive">設定</div>
+            </div>
+
+            <table class="account-list">
+                <tr>
+                    <td class="account-name-cell">アカウント名 1</td>
+                    <td class="action-cell"><button class="action-button delete-button">削除</button></td>
+                    <td class="action-cell"><button class="action-button change-button" data-account="1">変更</button></td>
+                </tr>
+                <tr class="change-form-row hidden" data-form="1">
+                    <td colspan="3">
+                        <div class="change-form-content">
+                            <div class="form-field">
+                                <span class="form-label">ユーザー名:</span>
+                                <input type="text" value="アカウント名 1" />
+                            </div>
+                            <div class="form-field">
+                                <span class="form-label">ログインID:</span>
+                                <input type="text" value="id_acc1" />
+                            </div>
+                            <div class="form-field">
+                                <span class="form-label">パスワード:</span>
+                                <input type="password" value="********" />
+                            </div>
+                            <button class="form-submit-button">変更</button>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="account-name-cell">アカウント名 2</td>
+                    <td class="action-cell"><button class="action-button delete-button">削除</button></td>
+                    <td class="action-cell"><button class="action-button change-button" data-account="2">変更</button></td>
+                </tr>
+                <tr class="change-form-row hidden" data-form="2">
+                    <td colspan="3">
+                        <div class="change-form-content">
+                            <div class="form-field">
+                                <span class="form-label">ユーザー名:</span>
+                                <input type="text" value="アカウント名 2" />
+                            </div>
+                            <div class="form-field">
+                                <span class="form-label">ログインID:</span>
+                                <input type="text" value="id_acc2" />
+                            </div>
+                            <div class="form-field">
+                                <span class="form-label">パスワード:</span>
+                                <input type="password" value="********" />
+                            </div>
+                            <button class="form-submit-button">変更</button>
+                        </div>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="account-name-cell">アカウント名 3</td>
+                    <td class="action-cell"><button class="action-button delete-button">削除</button></td>
+                    <td class="action-cell"><button class="action-button change-button" data-account="3">変更</button></td>
+                </tr>
+                <tr class="change-form-row hidden" data-form="3">
+                    <td colspan="3">
+                        <div class="change-form-content">
+                            <div class="form-field">
+                                <span class="form-label">ユーザー名:</span>
+                                <input type="text" value="アカウント名 3" />
+                            </div>
+                            <div class="form-field">
+                                <span class="form-label">ログインID:</span>
+                                <input type="text" value="id_acc3" />
+                            </div>
+                            <div class="form-field">
+                                <span class="form-label">パスワード:</span>
+                                <input type="password" value="********" />
+                            </div>
+                            <button class="form-submit-button">変更</button>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+
+        </div>
+    </div>
+
+    <script src="script4.js"></script>
+</body>
+</html>

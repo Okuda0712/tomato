@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>異常検知詳細</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+</head>
+<body class="side-panel-page">
+
+        <nav class="side-panel">
+
+            <div class="system-title">
+                <a href="{{ url_for('ui_bp.home_index') }}" style="text-decoration: none; color: inherit;">
+                    <p>
+                        <span class="text-wrapper">農園管理<br />システム</span>
+                        <span class="span">Ver 0.0</span>
+                    </p>
+                </a>
+            </div>
+                      
+            <ul class="nav-menu">
+                <li class="button-create" onclick="location.href='{{ url_for('ui_bp.kihyo_index') }}'">
+                    <i class="icon fas fa-pen-nib"></i>
+                    <div class="text-wrapper-button">起票作成</div>
+                </li>
+                <li class="button-list" onclick="location.href='{{ url_for('ui_bp.kannri_index') }}'">
+                    <i class="icon fas fa-book"></i>
+                    <div class="text-wrapper-button">起票一覧</div>
+                </li>
+                <li class="button-dashboard" onclick="location.href='{{ url_for('ui_bp.dashboard_index') }}'">
+                    <i class="icon fas fa-chart-bar"></i>
+                    <div class="text-wrapper-buttond">ダッシュボード</div>
+                </li>
+                <li class="button-alert active" onclick="location.href='{{ url_for('ui_bp.keiti_index') }}'">
+                    <i class="icon fa fa-bell"></i>
+                    <div class="text-wrapper-button">異常検知</div>
+                </li>
+                    <li class="button-camera" onclick="location.href='{{ url_for('ui_bp.camera_page') }}'">
+                    <i class="icon fas fa-video"></i>
+                    <div class="text-wrapper-button">デモ用カメラ</div>
+                </li>
+
+            </ul>
+
+            <form id="logout-form" method="POST" action="{{ url_for('auth_bp.logout') }}" style="width: 100%; margin-top: auto; padding-bottom: 20px;">
+                <button type="submit" class="button-logout" style="width: 100%; height: 50px; background-color: #f1f1f1; border: 1px solid #ccc; border-radius: 10px; font-size: 24px; font-weight: 700; cursor: pointer; transition: background-color 0.2s;">
+                    <i class="icon fas fa-sign-out-alt"></i> ログアウト
+                </button>
+            </form>
+
+        </nav>
+
+        <div class="line-wrapper"><div class="line"></div></div>
+
+    <div class="screen">
+
+        <main class="main-content">
+            <h1 class="page-title">異常検知詳細 - ID: <span id="detail-alert-id"></span></h1>
+            
+            <div class="alert-detail-container">
+                
+                <section class="detail-card summary-card">
+                    <h2>概要</h2>
+                    <p><strong>異常タイプ:</strong> <span id="detail-alert-type"></span></p>
+                    <p><strong>検知日時:</strong> <span id="detail-alert-timestamp"></span></p>
+                    <p><strong>発生場所:</strong> <span id="detail-alert-location"></span></p>
+                    <p><strong>確度:</strong> <span id="detail-alert-confidence"></span></p>
+                    <p><strong>対応状況:</strong> <span id="detail-alert-status"></span></p>
+                </section>
+
+                <section class="detail-card image-card">
+                    <h2>検知画像</h2>
+                    <div id="detail-alert-attachment-area">
+                        <img id="detail-alert-image" src="" alt="検知画像" style="max-width: 100%; height: auto; border-radius: 8px; display: none;">
+                        <p id="image-path-text"></p>
+                    </div>
+                </section>
+
+                <section class="detail-card full-details-card">
+                    <h2>詳細検出データ</h2>
+                    <pre id="detail-alert-details"></pre>
+                    <p class="note">※JSON形式で、バウンディングボックスなどの詳細情報が表示されます。</p>
+                </section>
+                
+            </div>
+
+            <div class="footer-buttons action-buttons">
+                <button type="button" class="button-common button-create-ticket" onclick="createTicketFromAlert()">
+                    <i class="fas fa-file-alt"></i> <span class="button-text">この異常を起票する</span>
+                </button>
+                <button type="button" class="button-back" onclick="location.href='{{ url_for('ui_bp.keiti_index') }}'">
+                    <span class="button-back-text">一覧に戻る</span>
+                </button>
+            </div>
+        </main>
+    </div>
+
+    <script defer src="{{ url_for('static', filename='script5.js') }}"></script>
+</body>
+</html>
